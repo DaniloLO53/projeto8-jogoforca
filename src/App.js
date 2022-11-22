@@ -1,14 +1,16 @@
 import React from "react";
 import Chute from "./components/Chute";
 import Jogo from "./components/Jogo/Jogo";
-import Letras from "./components/Letras";
+import Letras from "./components/Letras/Letras";
 // import palavras from "./palavras";
+import alfabeto from "./alfabeto";
+import './App.css'
 
 function App() {
   return (
-    <div>
+    <div className="mainContainer">
       <Jogo />
-      <Letras />
+      <Letras alfabeto={alfabeto} />
       <Chute />
     </div>
   );

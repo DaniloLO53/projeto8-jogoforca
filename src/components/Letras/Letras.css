@@ -1,0 +1,13 @@
+.lettersContainer {
+  /* background-color: red; */
+  width: 56%;
+}
+
+button {
+  width: 40px;
+  height: 40px;
+  margin: 6px;
+  background-color: #e1ecf4;
+  color: #7aa7c7;
+  font-weight: 700;
+}
