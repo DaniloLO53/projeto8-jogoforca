@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import './Jogo.css';
 import PropTypes from 'prop-types';
 
 function Jogo(props) {
-  const { setButtonsDisabled, errors } = props;
+  const { setButtonsDisabled, errors, word, renderLetters, renderBlank } = props;
+  console.log(word);
 
   // useEffect(() => dinamicHang(errors), [errors])
 
@@ -26,7 +28,7 @@ function Jogo(props) {
           Escolher Palavra
         </button>
         <div className="blankSpaces">
-
+          {renderBlank()}
         </div>
       </div>
     </div>
@@ -35,7 +37,10 @@ function Jogo(props) {
 
 Jogo.propTypes = {
   setButtonsDisabled: PropTypes.func.isRequired,
+  renderLetters: PropTypes.func.isRequired,
+  renderBlank: PropTypes.func.isRequired,
   errors: PropTypes.number.isRequired,
+  word: PropTypes.string.isRequired,
 };
 
 export default Jogo;
