@@ -1,5 +1,5 @@
 import React from "react";
-import Chute from "./components/Chute";
+import Chute from "./components/Chute/Chute";
 import Jogo from "./components/Jogo/Jogo";
 import Letras from "./components/Letras/Letras";
 // import palavras from "./palavras";

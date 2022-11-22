@@ -2,6 +2,7 @@
   /* background-color: purple; */
   width: 100%;
   display: flex;
+  margin-top: 60px;
 }
 
 .hangContainer {
