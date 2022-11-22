@@ -1,7 +1,9 @@
 import React from "react";
 import './Jogo.css';
+import PropTypes from 'prop-types';
 
-function Jogo() {
+function Jogo(props) {
+  const { setButtonsDisabled } = props;
 
   const dinamicHang = (hangNumber) => (
     <figure className="hangContainer">
@@ -17,6 +19,7 @@ function Jogo() {
       <div className="rightSide">
         <button
           type="button"
+          onClick={() => setButtonsDisabled(false)}
         >
           Escolher Palavra
         </button>
@@ -27,5 +30,9 @@ function Jogo() {
     </div>
   );
 }
+
+Jogo.propTypes = {
+  setButtonsDisabled: PropTypes.func.isRequired,
+};
 
 export default Jogo;

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import './Letras.css';
 
 function Letras(props) {
-  const { alfabeto } = props;
+  const { alfabeto, buttonsDisabled } = props;
 
   const letter = alfabeto.map((l) => (
     <button
       type="button"
       key={l}
+      disabled={buttonsDisabled}
     >
       {l.toUpperCase()}
     </button>
@@ -22,7 +23,8 @@ function Letras(props) {
 }
 
 Letras.propTypes = {
-  alfabeto: PropTypes.string.isRequired,
+  alfabeto: PropTypes.array.isRequired,
+  buttonsDisabled: PropTypes.bool.isRequired,
 };
 
 export default Letras;
