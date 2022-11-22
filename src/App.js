@@ -10,6 +10,12 @@ function App() {
   const [buttonsDisabled, setButtonsDisabled] = useState(true);
   const [errors, setErrors] = useState(0);
   const [word, setWord] = useState('');
+  const [currectLetter, setCurrectLetter] = useState('');
+
+  const handleLetter = ({ target }) => {
+    setCurrectLetter(target.innerHTML);
+    target.disabled = true;
+  };
 
   const randomWord = () => palavras[Math.floor(Math.random() * (palavras.length - 1))];
 
@@ -26,6 +32,11 @@ function App() {
   };
 
   useEffect(() => {
+    console.log(currectLetter);
+
+  }, [currectLetter]);
+
+  useEffect(() => {
     setWord(randomWord);
   }, [buttonsDisabled]);
 
@@ -33,13 +44,14 @@ function App() {
     <div className="mainContainer">
       <Jogo
         setButtonsDisabled={setButtonsDisabled}
+        buttonsDisabled={buttonsDisabled}
         errors={errors}
         setErros={setErrors}
         word={word}
         renderLetters={renderLetters}
         renderBlank={renderBlank}
       />
-      <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} />
+      <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} handleLetter={handleLetter} />
       <Chute buttonsDisabled={buttonsDisabled} />
     </div>
   );
