@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
 import './Jogo.css';
 import PropTypes from 'prop-types';
 
 function Jogo(props) {
-  const { setButtonsDisabled, buttonsDisabled, errors, word, renderLetters, renderBlank } = props;
+  const { setButtonsDisabled, buttonsDisabled, errors, word, renderBlank, blank } = props;
   console.log(word);
 
-  // useEffect(() => dinamicHang(errors), [errors])
+  useEffect(() => renderBlank(), [buttonsDisabled]);
 
   const dinamicHang = (hangNumber) => (
     <figure className="hangContainer">
@@ -17,18 +17,22 @@ function Jogo(props) {
     </figure>
   );
 
+  const dinamicLetters = () => blank.map((letter, index) => <span key={index}>{letter}</span>);
+
   return (
     <div className="gameContainer">
       {dinamicHang(errors)}
       <div className="rightSide">
         <button
           type="button"
-          onClick={() => setButtonsDisabled(false)}
+          onClick={() => {
+            setButtonsDisabled(false);
+          }}
         >
           Escolher Palavra
         </button>
         <div className="blankSpaces">
-          {!buttonsDisabled && renderBlank()}
+          {!buttonsDisabled && dinamicLetters()}
         </div>
       </div>
     </div>
@@ -42,6 +46,7 @@ Jogo.propTypes = {
   renderBlank: PropTypes.func.isRequired,
   errors: PropTypes.number.isRequired,
   word: PropTypes.string.isRequired,
+  blank: PropTypes.array.isRequired,
 };
 
 export default Jogo;
