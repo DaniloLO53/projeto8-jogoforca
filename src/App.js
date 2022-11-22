@@ -33,6 +33,11 @@ function App() {
 
   useEffect(() => {
     console.log(currectLetter);
+    if (word.includes(currectLetter.toLocaleLowerCase())) {
+      console.log('uhuulll')
+    } else {
+      setErrors((prevState) => prevState + 1);
+    }
 
   }, [currectLetter]);
 
