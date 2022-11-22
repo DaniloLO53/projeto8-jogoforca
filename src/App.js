@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import Chute from "./components/Chute/Chute";
 import Jogo from "./components/Jogo/Jogo";
 import Letras from "./components/Letras/Letras";
-// import palavras from "./palavras";
+import palavras from "./palavras";
 import alfabeto from "./alfabeto";
 import './App.css'
 
 function App() {
   const [buttonsDisabled, setButtonsDisabled] = useState(true);
   const [errors, setErrors] = useState(0);
+
+  const randomWord = () => palavras[Math.floor(Math.random() * (palavras.length - 1))];
+  console.log(randomWord());
 
   return (
     <div className="mainContainer">
