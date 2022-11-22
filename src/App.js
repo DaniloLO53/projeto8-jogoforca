@@ -8,11 +8,14 @@ import './App.css'
 
 function App() {
   const [buttonsDisabled, setButtonsDisabled] = useState(true);
+  const [errors, setErrors] = useState(0);
 
   return (
     <div className="mainContainer">
       <Jogo
         setButtonsDisabled={setButtonsDisabled}
+        errors={errors}
+        setErros={setErrors}
       />
       <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} />
       <Chute buttonsDisabled={buttonsDisabled} />

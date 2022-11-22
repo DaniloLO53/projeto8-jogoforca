@@ -3,7 +3,9 @@ import './Jogo.css';
 import PropTypes from 'prop-types';
 
 function Jogo(props) {
-  const { setButtonsDisabled } = props;
+  const { setButtonsDisabled, errors } = props;
+
+  // useEffect(() => dinamicHang(errors), [errors])
 
   const dinamicHang = (hangNumber) => (
     <figure className="hangContainer">
@@ -15,7 +17,7 @@ function Jogo(props) {
 
   return (
     <div className="gameContainer">
-      {dinamicHang(0)}
+      {dinamicHang(errors)}
       <div className="rightSide">
         <button
           type="button"
@@ -33,6 +35,7 @@ function Jogo(props) {
 
 Jogo.propTypes = {
   setButtonsDisabled: PropTypes.func.isRequired,
+  errors: PropTypes.number.isRequired,
 };
 
 export default Jogo;
