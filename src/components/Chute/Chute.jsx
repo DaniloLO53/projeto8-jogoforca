@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Chute.css';
 import PropTypes from 'prop-types';
 
 function Chute(props) {
-  const { buttonsDisabled, setGuessWord } = props;
+  const { buttonsDisabled, setGuessWord, setWin, word, guessWord } = props;
 
   const [inputValue, setInputValue] = useState('');
 
-  // console.log(guessWord)
+  // console.log(word)
+
+  useEffect(() => {
+    if (word !== '') {
+      setWin(word === guessWord ? 'win' : 'loose');
+    }
+  }, [guessWord]);
 
   return (
     <div className="guessContainer">
@@ -20,7 +26,9 @@ function Chute(props) {
       <button
         type="button"
         disabled={buttonsDisabled}
-        onClick={() => setGuessWord(inputValue)}
+        onClick={() => {
+          setGuessWord(inputValue);
+        }}
       >
         Chutar
       </button>
@@ -31,6 +39,9 @@ function Chute(props) {
 Chute.propTypes = {
   buttonsDisabled: PropTypes.bool.isRequired,
   setGuessWord: PropTypes.func.isRequired,
+  setWin: PropTypes.func.isRequired,
+  word: PropTypes.string.isRequired,
+  guessWord: PropTypes.string.isRequired,
 };
 
 export default Chute;

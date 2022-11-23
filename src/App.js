@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
 import Chute from "./components/Chute/Chute";
 import Jogo from "./components/Jogo/Jogo";
 import Letras from "./components/Letras/Letras";
@@ -12,63 +13,90 @@ function App() {
   const [buttonsDisabled, setButtonsDisabled] = useState(true);
   const [errors, setErrors] = useState(0);
   const [word, setWord] = useState('');
-  const [currectLetter, setCurrectLetter] = useState('');
-  const [blank, setBlank] = useState([]);
+  const [currentLetter, setCurrentLetter] = useState('');
+  // const [blank, setBlank] = useState([]);
   const [guessWord, setGuessWord] = useState('');
+  const [win, setWin] = useState('');
+  const [currentBlankSpaces, setCurrentBlankSpaces] = useState([]);
+  const [currentElementBlankSpaces, setCurrentElementBlankSpaces] = useState([]);
 
-  const handleLetter = ({ target }) => {
-    setCurrectLetter(target.innerHTML);
-    target.disabled = true;
-  };
-
-  const checkIsTheWord = () => {
-    if (guessWord === word) {
-      console.log('Ganhouuu');
-    } else {
-      console.log('errouu')
-
-      setErrors(6);
-    }
-  };
-
-  const renderBlank = () => {
-    const wordSplited = word.split('');
-
-    const whatToRender = blank.length === 0 ? wordSplited : blank;
-
-    console.log(whatToRender);
-
-    const lettersCorrect = wordSplited.map((letter) => letter === currectLetter.toLocaleLowerCase() ? letter : '_');
-
-    const lettersToRender = blank.map((letter, index) => {
-      if (lettersCorrect[index] !== '_') {
-        return letter = lettersCorrect[index];
-      } else {
-        return letter
-      }
-    });
-
-    console.log(word, blank, lettersCorrect, lettersToRender);
-
-    setBlank(blank.length > 0 ? lettersToRender : lettersCorrect);
-
-    // return wordSplited.map((letter, index) => <span key={index}>{'_'}</span>);
-  };
+  // const handleLetter = ({ target }) => {
+  //   setcurrentLetter(target.innerHTML);
+  //   target.disabled = true;
+  // };
 
   useEffect(() => {
-    checkIsTheWord();
-  }, [guessWord]);
-
-  useEffect(() => {
-    console.log(currectLetter);
-    if (word.includes(currectLetter.toLocaleLowerCase())) {
-      console.log('uhuulll')
+    if (word.length !== 0) {
+      setButtonsDisabled(false);
       renderBlank();
     } else {
+      // console.log('Inicio')
+    }
+  }, [word]);
+
+  useEffect(() => renderBlank(), [currentLetter]);
+
+  const getWordSplited = (word) => word.split('');
+
+  const getBlankSpacesSplited = (word, currentLetter) => word
+    .map((letter) => letter === currentLetter ? letter : '_');
+
+  const mergeBlankSpaces = (previous, current) => current.map((space, index) => {
+    const charOfPrevious = previous[index] || '_';
+
+    const currentIsBlank = space === '_';
+    const previousIsBlank = charOfPrevious === '_';
+
+    if (!currentIsBlank) return space;
+    if (!previousIsBlank) return charOfPrevious;
+    return '_';
+  });
+
+  const renderBlank = () => {
+    const wordSplited = getWordSplited(word);
+    const blankSpacesSplited = getBlankSpacesSplited(wordSplited, currentLetter);
+    const newCurrentBlankSpaces = mergeBlankSpaces(currentBlankSpaces, blankSpacesSplited);
+
+    setCurrentBlankSpaces(newCurrentBlankSpaces);
+  };
+
+  const renderBlankOnScreen = () => currentBlankSpaces
+    .map((char, index) => <span key={index}>{char}</span>);
+
+  const verifyContainsLetter = () => word.includes(currentLetter);
+
+  const hangHandle = () => {
+    const correct = verifyContainsLetter();
+
+    if (!correct) {
       setErrors((prevState) => prevState + 1);
     }
+  };
 
-  }, [currectLetter]);
+  useEffect(() => {
+    if (currentBlankSpaces.length !== 0) {
+      const completed = currentBlankSpaces.every((char) => char !== '_' && char);
+
+      setCurrentElementBlankSpaces(renderBlankOnScreen());
+
+      setWin(completed ? 'win' : '');
+    }
+  }, [currentBlankSpaces]);
+
+  useEffect(() => {
+    hangHandle();
+    console.log(word)
+  }, [currentLetter]);
+
+  useEffect(() => {
+    setButtonsDisabled(true);
+
+    if (win === 'win') {
+      const correctWordSplited = getWordSplited(word);
+      setCurrentBlankSpaces(correctWordSplited);
+    }
+
+  }, [win]);
 
   return (
     <div className="mainContainer">
@@ -81,10 +109,13 @@ function App() {
         setWord={setWord}
         randomWord={randomWord}
         renderBlank={renderBlank}
-        blank={blank}
+        win={win}
+        currentLetter={currentLetter}
+        setCurrentLetter={setCurrentLetter}
+        currentElementBlankSpaces={currentElementBlankSpaces}
       />
-      <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} handleLetter={handleLetter} />
-      <Chute buttonsDisabled={buttonsDisabled} guessWord={guessWord} setGuessWord={setGuessWord} />
+      <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} currentLetter={currentLetter} setCurrentLetter={setCurrentLetter} />
+      <Chute buttonsDisabled={buttonsDisabled} guessWord={guessWord} word={word} setGuessWord={setGuessWord} setWin={setWin} />
     </div>
   );
 }
