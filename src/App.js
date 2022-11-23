@@ -14,17 +14,25 @@ function App() {
   const [word, setWord] = useState('');
   const [currectLetter, setCurrectLetter] = useState('');
   const [blank, setBlank] = useState([]);
+  const [guessWord, setGuessWord] = useState('');
 
   const handleLetter = ({ target }) => {
     setCurrectLetter(target.innerHTML);
     target.disabled = true;
   };
 
+  const checkIsTheWord = () => {
+    if (guessWord === word) {
+      console.log('Ganhouuu');
+    } else {
+      console.log('errouu')
+
+      setErrors(6);
+    }
+  };
 
   const renderBlank = () => {
     const wordSplited = word.split('');
-
-
 
     const whatToRender = blank.length === 0 ? wordSplited : blank;
 
@@ -46,6 +54,10 @@ function App() {
 
     // return wordSplited.map((letter, index) => <span key={index}>{'_'}</span>);
   };
+
+  useEffect(() => {
+    checkIsTheWord();
+  }, [guessWord]);
 
   useEffect(() => {
     console.log(currectLetter);
@@ -74,7 +86,7 @@ function App() {
         blank={blank}
       />
       <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} handleLetter={handleLetter} />
-      <Chute buttonsDisabled={buttonsDisabled} />
+      <Chute buttonsDisabled={buttonsDisabled} guessWord={guessWord} setGuessWord={setGuessWord} />
     </div>
   );
 }
