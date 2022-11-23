@@ -4,7 +4,7 @@ import './Jogo.css';
 import PropTypes from 'prop-types';
 
 function Jogo(props) {
-  const { setButtonsDisabled, buttonsDisabled, errors, word, renderBlank, blank } = props;
+  const { setButtonsDisabled, buttonsDisabled, errors, word, setWord, renderBlank, blank, randomWord } = props;
   console.log(word);
 
   useEffect(() => renderBlank(), [buttonsDisabled]);
@@ -26,6 +26,7 @@ function Jogo(props) {
         <button
           type="button"
           onClick={() => {
+            setWord(randomWord());
             setButtonsDisabled(false);
           }}
         >
@@ -46,7 +47,9 @@ Jogo.propTypes = {
   renderBlank: PropTypes.func.isRequired,
   errors: PropTypes.number.isRequired,
   word: PropTypes.string.isRequired,
+  setWord: PropTypes.func.isRequired,
   blank: PropTypes.array.isRequired,
+  randomWord: PropTypes.func.isRequired,
 };
 
 export default Jogo;

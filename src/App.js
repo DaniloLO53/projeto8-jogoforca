@@ -70,10 +70,6 @@ function App() {
 
   }, [currectLetter]);
 
-  useEffect(() => {
-    setWord(randomWord);
-  }, [buttonsDisabled]);
-
   return (
     <div className="mainContainer">
       <Jogo
@@ -82,6 +78,8 @@ function App() {
         errors={errors}
         setErros={setErrors}
         word={word}
+        setWord={setWord}
+        randomWord={randomWord}
         renderBlank={renderBlank}
         blank={blank}
       />
