@@ -138,22 +138,20 @@ function App() {
   return (
     <div className="mainContainer">
       <Jogo
-        setButtonsDisabled={setButtonsDisabled}
-        buttonsDisabled={buttonsDisabled}
         errors={errors}
-        setErros={setErrors}
-        word={word}
-        setWord={setWord}
-        randomWord={randomWord}
-        renderBlank={renderBlank}
-        currentLetter={currentLetter}
-        setCurrentLetter={setCurrentLetter}
         gameState={gameState}
         setGameState={setGameState}
         currentElementBlankSpaces={currentElementBlankSpaces}
       />
-      <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} currentLetter={currentLetter} setCurrentLetter={setCurrentLetter} />
-      <Chute buttonsDisabled={buttonsDisabled} guessWord={guessWord} word={word} setGuessWord={setGuessWord} setGameState={setGameState} setCurrentBlankSpaces={setCurrentBlankSpaces} />
+      <Letras
+        alfabeto={alfabeto}
+        buttonsDisabled={buttonsDisabled}
+        setCurrentLetter={setCurrentLetter}
+      />
+      <Chute
+        buttonsDisabled={buttonsDisabled}
+        setGuessWord={setGuessWord}
+      />
     </div>
   );
 }

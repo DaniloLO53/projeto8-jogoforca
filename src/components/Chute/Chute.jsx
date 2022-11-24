@@ -4,11 +4,9 @@ import './Chute.css';
 import PropTypes from 'prop-types';
 
 function Chute(props) {
-  const { buttonsDisabled, setGuessWord, word, guessWord, setGameState, setCurrentBlankSpaces } = props;
+  const { buttonsDisabled, setGuessWord } = props;
 
   const [inputValue, setInputValue] = useState('');
-
-  // console.log(word)
 
   return (
     <div className="guessContainer">
@@ -34,11 +32,6 @@ function Chute(props) {
 Chute.propTypes = {
   buttonsDisabled: PropTypes.bool.isRequired,
   setGuessWord: PropTypes.func.isRequired,
-  setWin: PropTypes.func.isRequired,
-  setGameState: PropTypes.string.isRequired,
-  word: PropTypes.string.isRequired,
-  guessWord: PropTypes.string.isRequired,
-  setCurrentBlankSpaces: PropTypes.func.isRequired,
 };
 
 export default Chute;
