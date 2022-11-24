@@ -5,6 +5,8 @@ import './Letras.css';
 function Letras(props) {
   const { alfabeto, buttonsDisabled, setCurrentLetter } = props;
 
+  console.log('LELEL', buttonsDisabled)
+
   const letter = alfabeto.map((l) => (
     <button
       type="button"

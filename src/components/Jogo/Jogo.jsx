@@ -21,7 +21,7 @@ function Jogo(props) {
       <div className="rightSide">
         <button
           type="button"
-          onClick={() => setGameState("playing")}
+          onClick={() => setGameState(gameState === 'playing' ? 'reload' : 'playing')}
         >
           Escolher Palavra
         </button>

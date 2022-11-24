@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import './Chute.css';
 import PropTypes from 'prop-types';
@@ -8,18 +9,6 @@ function Chute(props) {
   const [inputValue, setInputValue] = useState('');
 
   // console.log(word)
-
-  useEffect(() => {
-    if (word !== '') {
-
-      if (word === guessWord) {
-        setCurrentBlankSpaces(word.split(''));
-      } else {
-        setGameState('loose');
-        setCurrentBlankSpaces(word.split(''));
-      }
-    }
-  }, [guessWord]);
 
   return (
     <div className="guessContainer">

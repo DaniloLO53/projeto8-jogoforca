@@ -20,36 +20,31 @@ function App() {
   const [gameState, setGameState] = useState("paused");
   const [showChars, setShowChars] = useState(false);
 
+  const setDefaultInitialState = () => {
+    setCurrentLetter("");
+    setWord(randomWord());
+    setButtonsDisabled(true);
+  };
+
   useEffect(() => {
     console.log(word);
-    if (gameState === "paused") {
-      console.log("paused");
-      setCurrentLetter("");
-      setWord(randomWord());
-      setCurrentBlankSpaces([]);
-      setButtonsDisabled(true);
-      setShowChars(false);
+    setCurrentBlankSpaces([]);
 
-    } else if (gameState === "win") {
-      console.log("win");
-      setCurrentLetter("");
-      setWord(randomWord());
-      setCurrentBlankSpaces([]);
-      setButtonsDisabled(true);
+    if (gameState === "paused" || gameState === 'win' || gameState === 'loose') {
+      setDefaultInitialState();
       setShowChars(false);
 
     } else if (gameState === "playing") {
+      console.log('playing')
       setErrors(0);
       setButtonsDisabled(false);
       setShowChars(true);
-    } else if (gameState === 'loose') {
-      console.log('loose');
-      setCurrentLetter("");
-      setWord(randomWord());
-      setCurrentBlankSpaces([]);
-      setButtonsDisabled(true);
-      setShowChars(false);
-      setErrors(6);
+
+    } else if (gameState === 'reload') {
+      console.log('reload')
+      setDefaultInitialState();
+      setGameState('playing');
+
     }
 
   }, [gameState]);
@@ -69,10 +64,6 @@ function App() {
 
       if (completed && gameState === 'playing') {
         setGameState('win');
-      } else if (completed && gameState === 'loose') {
-        console.log('wohdod');
-      } else if (!completed) {
-        console.log('ewqduhc');
       }
 
     }
@@ -84,6 +75,28 @@ function App() {
       hangHandle();
     }
   }, [currentLetter]);
+
+  useEffect(() => {
+    if (errors === 6) {
+      console.log(errors)
+      setGameState('loose');
+      setCurrentBlankSpaces(word.split(''));
+    }
+
+  }, [errors]);
+
+  useEffect(() => {
+    if (word !== '') {
+
+      if (word === guessWord) {
+        setCurrentBlankSpaces(word.split(''));
+      } else {
+        setGameState('loose');
+        setErrors(6);
+        setCurrentBlankSpaces(word.split(''));
+      }
+    }
+  }, [guessWord]);
 
   const getWordSplited = (word) => word.split('');
 
