@@ -4,28 +4,8 @@ import './Jogo.css';
 import PropTypes from 'prop-types';
 
 function Jogo(props) {
-  const { setButtonsDisabled, buttonsDisabled, errors, word, setWord, renderBlank, blank, randomWord, win, currect, setCurrentLetter, startGame, currentElementBlankSpaces, setCurrentBlankSpaces, gameState } = props;
+  const { setButtonsDisabled, buttonsDisabled, errors, word, setWord, renderBlank, blank, randomWord, win, currect, setCurrentLetter, startGame, currentElementBlankSpaces, setCurrentBlankSpaces, gameState, setGameState } = props;
   // console.log(word);
-
-  const [gameState, setGameState] = useState("paused");
-
-  // useEffect(() => renderBlank(), [word]);
-
-  useEffect (() => {
-    if (gameState === "paused") {
-      console.log("paused");
-    } else if (gameState === "win") {
-      console.log("win");
-    } else if (gameState === "playing") {
-      setButtonsDisabled(false);
-    }
-
-    setCurrentLetter("");
-    setWord(randomWord());
-    setErrors(0);
-    setCurrentBlankSpaces([]);
-    setButtonsDisabled(true);
-  }, [gameState]);
 
   const dinamicHang = (hangNumber) => (
     <figure className="hangContainer">
@@ -34,10 +14,6 @@ function Jogo(props) {
       />
     </figure>
   );
-
-  // console.log(currentElementBlankSpaces)
-
-  // const dinamicLetters = () => blank.map((letter, index) => <span key={index}>{letter}</span>);
 
   return (
     <div className="gameContainer">
@@ -73,6 +49,7 @@ Jogo.propTypes = {
   startGame: PropTypes.func.isRequired,
   setCurrentBlankSpaces: PropTypes.func.isRequired,
   gameState: PropTypes.string.isRequired,
+  setGameState: PropTypes.string.isRequired,
   currentElementBlankSpaces: PropTypes.func.isRequired,
 };
 
