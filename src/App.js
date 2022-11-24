@@ -14,27 +14,52 @@ function App() {
   const [errors, setErrors] = useState(0);
   const [word, setWord] = useState('');
   const [currentLetter, setCurrentLetter] = useState('');
-  // const [blank, setBlank] = useState([]);
   const [guessWord, setGuessWord] = useState('');
-  const [win, setWin] = useState('');
   const [currentBlankSpaces, setCurrentBlankSpaces] = useState([]);
   const [currentElementBlankSpaces, setCurrentElementBlankSpaces] = useState([]);
+  const [gameState, setGameState] = useState("paused");
+  const [showChars, setShowChars] = useState(false);
 
-  // const handleLetter = ({ target }) => {
-  //   setcurrentLetter(target.innerHTML);
-  //   target.disabled = true;
-  // };
+  useEffect (() => {
+    if (gameState === "paused") {
+      console.log("paused");
+      setCurrentLetter("");
+      setWord(randomWord());
+      setErrors(0);
+      setCurrentBlankSpaces([]);
+      setButtonsDisabled(true);
+      setShowChars(true);
+
+    } else if (gameState === "win") {
+      console.log("win");
+    } else if (gameState === "playing") {
+      setButtonsDisabled(false);
+      setShowChars(true);
+    }
+
+  }, [gameState]);
 
   useEffect(() => {
-    if (word.length !== 0) {
-      setButtonsDisabled(false);
-      renderBlank();
-    } else {
-      // console.log('Inicio')
+    if (showChars === true) {
+      renderBlank(word);
     }
-  }, [word]);
+  
+  }, [showChars]);
 
-  useEffect(() => renderBlank(), [currentLetter]);
+  useEffect(() => {
+    if (currentBlankSpaces.length !== 0) {
+      const completed = currentBlankSpaces.every((char) => char !== '_' && char);
+
+      setCurrentElementBlankSpaces(renderBlankOnScreen());
+
+      setGameState(completed ? 'win' : "playing");
+    }
+  }, [currentBlankSpaces]);
+
+  useEffect(() => {
+    renderBlank();
+    hangHandle();
+  }, [currentLetter]);
 
   const getWordSplited = (word) => word.split('');
 
@@ -73,31 +98,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (currentBlankSpaces.length !== 0) {
-      const completed = currentBlankSpaces.every((char) => char !== '_' && char);
-
-      setCurrentElementBlankSpaces(renderBlankOnScreen());
-
-      setWin(completed ? 'win' : '');
-    }
-  }, [currentBlankSpaces]);
-
-  useEffect(() => {
-    hangHandle();
-    console.log(word)
-  }, [currentLetter]);
-
-  useEffect(() => {
-    setButtonsDisabled(true);
-
-    if (win === 'win') {
-      const correctWordSplited = getWordSplited(word);
-      setCurrentBlankSpaces(correctWordSplited);
-    }
-
-  }, [win]);
-
   return (
     <div className="mainContainer">
       <Jogo
@@ -112,10 +112,12 @@ function App() {
         win={win}
         currentLetter={currentLetter}
         setCurrentLetter={setCurrentLetter}
+        gameState={gameState}
+        setGameState={setGameState}
         currentElementBlankSpaces={currentElementBlankSpaces}
       />
       <Letras alfabeto={alfabeto} buttonsDisabled={buttonsDisabled} currentLetter={currentLetter} setCurrentLetter={setCurrentLetter} />
-      <Chute buttonsDisabled={buttonsDisabled} guessWord={guessWord} word={word} setGuessWord={setGuessWord} setWin={setWin} />
+      <Chute buttonsDisabled={buttonsDisabled} guessWord={guessWord} word={word} setGuessWord={setGuessWord} setGameState={setGameState} />
     </div>
   );
 }
