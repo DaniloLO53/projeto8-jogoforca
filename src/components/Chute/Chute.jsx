@@ -3,7 +3,7 @@ import './Chute.css';
 import PropTypes from 'prop-types';
 
 function Chute(props) {
-  const { buttonsDisabled, setGuessWord, setWin, word, guessWord } = props;
+  const { buttonsDisabled, setGuessWord, word, guessWord, setGameState, setCurrentBlankSpaces } = props;
 
   const [inputValue, setInputValue] = useState('');
 
@@ -11,7 +11,13 @@ function Chute(props) {
 
   useEffect(() => {
     if (word !== '') {
-      setWin(word === guessWord ? 'win' : 'loose');
+
+      if (word === guessWord) {
+        setCurrentBlankSpaces(word.split(''));
+      } else {
+        setGameState('loose');
+        setCurrentBlankSpaces(word.split(''));
+      }
     }
   }, [guessWord]);
 
@@ -40,8 +46,10 @@ Chute.propTypes = {
   buttonsDisabled: PropTypes.bool.isRequired,
   setGuessWord: PropTypes.func.isRequired,
   setWin: PropTypes.func.isRequired,
+  setGameState: PropTypes.string.isRequired,
   word: PropTypes.string.isRequired,
   guessWord: PropTypes.string.isRequired,
+  setCurrentBlankSpaces: PropTypes.func.isRequired,
 };
 
 export default Chute;

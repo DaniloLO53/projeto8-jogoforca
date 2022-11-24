@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './Jogo.css';
 import PropTypes from 'prop-types';
 
 function Jogo(props) {
-  const { setButtonsDisabled, buttonsDisabled, errors, word, setWord, renderBlank, blank, randomWord, win, currect, setCurrentLetter, startGame, currentElementBlankSpaces } = props;
+  const { setButtonsDisabled, buttonsDisabled, errors, word, setWord, renderBlank, blank, randomWord, win, currect, setCurrentLetter, startGame, currentElementBlankSpaces, setCurrentBlankSpaces, gameState, setGameState } = props;
   // console.log(word);
-
-  // useEffect(() => renderBlank(), [word]);
 
   const dinamicHang = (hangNumber) => (
     <figure className="hangContainer">
@@ -17,21 +15,17 @@ function Jogo(props) {
     </figure>
   );
 
-  // console.log(currentElementBlankSpaces)
-
-  // const dinamicLetters = () => blank.map((letter, index) => <span key={index}>{letter}</span>);
-
   return (
     <div className="gameContainer">
       {dinamicHang(errors)}
       <div className="rightSide">
         <button
           type="button"
-          onClick={() => setWord(randomWord())}
+          onClick={() => setGameState("playing")}
         >
           Escolher Palavra
         </button>
-        <div className={win}>
+        <div className={gameState}>
           {currentElementBlankSpaces}
         </div>
       </div>
@@ -53,6 +47,9 @@ Jogo.propTypes = {
   currect: PropTypes.string.isRequired,
   setCurrentLetter: PropTypes.func.isRequired,
   startGame: PropTypes.func.isRequired,
+  setCurrentBlankSpaces: PropTypes.func.isRequired,
+  gameState: PropTypes.string.isRequired,
+  setGameState: PropTypes.string.isRequired,
   currentElementBlankSpaces: PropTypes.func.isRequired,
 };
 
