@@ -83,7 +83,6 @@ function App() {
       renderBlank();
       hangHandle();
     }
-
   }, [currentLetter]);
 
   const getWordSplited = (word) => word.split('');
