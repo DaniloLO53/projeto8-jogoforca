@@ -25,14 +25,20 @@ function App() {
       console.log("paused");
       setCurrentLetter("");
       setWord(randomWord());
-      setErrors(0);
       setCurrentBlankSpaces([]);
       setButtonsDisabled(true);
-      setShowChars(true);
+      setShowChars(false);
 
     } else if (gameState === "win") {
       console.log("win");
+      setCurrentLetter("");
+      setWord(randomWord());
+      setCurrentBlankSpaces([]);
+      setButtonsDisabled(true);
+      setShowChars(false);
+
     } else if (gameState === "playing") {
+      setErrors(0);
       setButtonsDisabled(false);
       setShowChars(true);
     }
@@ -57,8 +63,11 @@ function App() {
   }, [currentBlankSpaces]);
 
   useEffect(() => {
-    renderBlank();
-    hangHandle();
+    if (showChars === true) {
+      renderBlank();
+      hangHandle();
+    }
+    
   }, [currentLetter]);
 
   const getWordSplited = (word) => word.split('');
