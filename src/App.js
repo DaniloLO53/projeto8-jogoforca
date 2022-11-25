@@ -8,8 +8,6 @@ import alfabeto from "./alfabeto";
 import './App.css'
 
 function App() {
-  const randomWord = () => palavras[Math.floor(Math.random() * (palavras.length - 1))];
-
   const [buttonsDisabled, setButtonsDisabled] = useState(true);
   const [errors, setErrors] = useState(0);
   const [word, setWord] = useState('');
@@ -20,6 +18,8 @@ function App() {
   const [gameState, setGameState] = useState("paused");
   const [showChars, setShowChars] = useState(false);
 
+  const randomWord = () => palavras[Math.floor(Math.random() * (palavras.length - 1))];
+
   const setDefaultInitialState = () => {
     setCurrentLetter("");
     setWord(randomWord());
@@ -27,7 +27,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(word);
     setCurrentBlankSpaces([]);
 
     if (gameState === "paused" || gameState === 'win' || gameState === 'loose') {
@@ -35,13 +34,11 @@ function App() {
       setShowChars(false);
 
     } else if (gameState === "playing") {
-      console.log('playing')
       setErrors(0);
       setButtonsDisabled(false);
       setShowChars(true);
 
     } else if (gameState === 'reload') {
-      console.log('reload')
       setDefaultInitialState();
       setGameState('playing');
 
@@ -78,7 +75,6 @@ function App() {
 
   useEffect(() => {
     if (errors === 6) {
-      console.log(errors)
       setGameState('loose');
       setCurrentBlankSpaces(word.split(''));
     }
@@ -86,19 +82,15 @@ function App() {
   }, [errors]);
 
   useEffect(() => {
-    if (word !== '') {
+    if (gameState !== 'paused') {
+      setCurrentBlankSpaces(word.split(''));
 
-      if (word === guessWord) {
-        setCurrentBlankSpaces(word.split(''));
-      } else {
+      if (word !== guessWord) {
         setGameState('loose');
         setErrors(6);
-        setCurrentBlankSpaces(word.split(''));
       }
     }
   }, [guessWord]);
-
-  const getWordSplited = (word) => word.split('');
 
   const getBlankSpacesSplited = (word, currentLetter) => word
     .map((letter) => letter === currentLetter ? letter : '_');
@@ -115,7 +107,7 @@ function App() {
   });
 
   const renderBlank = () => {
-    const wordSplited = getWordSplited(word);
+    const wordSplited = word.split('');
     const blankSpacesSplited = getBlankSpacesSplited(wordSplited, currentLetter);
     const newCurrentBlankSpaces = mergeBlankSpaces(currentBlankSpaces, blankSpacesSplited);
 
@@ -123,12 +115,10 @@ function App() {
   };
 
   const renderBlankOnScreen = () => currentBlankSpaces
-    .map((char, index) => <span key={index}>{char}</span>);
-
-  const verifyContainsLetter = () => word.includes(currentLetter);
+    .map((char, index) => <span key={index + char}>{char}</span>);
 
   const hangHandle = () => {
-    const correct = verifyContainsLetter();
+    const correct = word.includes(currentLetter);
 
     if (!correct) {
       setErrors((prevState) => prevState + 1);

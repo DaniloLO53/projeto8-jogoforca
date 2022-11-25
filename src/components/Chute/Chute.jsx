@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './Chute.css';
 import PropTypes from 'prop-types';
 
@@ -19,9 +19,7 @@ function Chute(props) {
       <button
         type="button"
         disabled={buttonsDisabled}
-        onClick={() => {
-          setGuessWord(inputValue);
-        }}
+        onClick={() => setGuessWord(inputValue)}
       >
         Chutar
       </button>
