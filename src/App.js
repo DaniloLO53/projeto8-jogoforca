@@ -27,6 +27,7 @@ function App() {
   };
 
   useEffect(() => {
+    console.log(word);
     setCurrentBlankSpaces([]);
 
     if (gameState === "paused" || gameState === 'win' || gameState === 'loose') {
@@ -34,11 +35,13 @@ function App() {
       setShowChars(false);
 
     } else if (gameState === "playing") {
+      console.log('playing')
       setErrors(0);
       setButtonsDisabled(false);
       setShowChars(true);
 
     } else if (gameState === 'reload') {
+      console.log('reload')
       setDefaultInitialState();
       setGameState('playing');
 
@@ -75,6 +78,7 @@ function App() {
 
   useEffect(() => {
     if (errors === 6) {
+      console.log(errors)
       setGameState('loose');
       setCurrentBlankSpaces(word.split(''));
     }
@@ -82,12 +86,16 @@ function App() {
   }, [errors]);
 
   useEffect(() => {
-    if (gameState !== 'paused') {
-      setCurrentBlankSpaces(word.split(''));
+    console.log('WORD', word)
 
-      if (word !== guessWord) {
+    if (word !== '') {
+
+      if (word === guessWord) {
+        setCurrentBlankSpaces(word.split(''));
+      } else {
         setGameState('loose');
         setErrors(6);
+        setCurrentBlankSpaces(word.split(''));
       }
     }
   }, [guessWord]);
@@ -117,8 +125,10 @@ function App() {
   const renderBlankOnScreen = () => currentBlankSpaces
     .map((char, index) => <span key={index + char}>{char}</span>);
 
+  const verifyContainsLetter = () => word.includes(currentLetter);
+
   const hangHandle = () => {
-    const correct = word.includes(currentLetter);
+    const correct = verifyContainsLetter();
 
     if (!correct) {
       setErrors((prevState) => prevState + 1);
