@@ -1,51 +1,24 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function Jogo(props) {
   const {
     errors,
-    currentElementBlankSpaces,
-    gameState,
-    setGameState,
-    word
+    // setErrors,
   } = props;
 
-  const [dataAnswer, setDataAnswer] = useState(false);
-
-  const dinamicHang = (hangNumber) => (
-    <StyledFigure className="hangContainer">
-      <StyledImg
-        src={`./assets/forca${hangNumber}.png`}
-        data-test="game-image"
-      />
-    </StyledFigure>
-  );
-
-  console.log('OO', gameState)
-
   return (
-    <StyledGameContainer className="gameContainer">
-      {dinamicHang(errors)}
-      <StyledRightSide className="rightSide">
-        <StyledButton
-          type="button"
-          onClick={() => {
-            setGameState(gameState === 'playing' ? 'reload' : 'playing');
-            setDataAnswer(true);
-          }}
-          data-test="choose-word"
-        >
-          Escolher Palavra
-        </StyledButton>
-        <StyledBlankSpaces
-          data-test="word"
-          data-answer={dataAnswer ? word : ''}
-          gameState={gameState}
-        >
-          {currentElementBlankSpaces}
-        </StyledBlankSpaces>
+    <StyledGameContainer>
+      <StyledFigure>
+        <StyledImg
+          src={`./assets/forca${errors}.png`}
+          alt="#"
+        />
+      </StyledFigure>
+      <StyledRightSide>
+        <StyledButton>Escolher Palavra</StyledButton>
+        <p></p>
       </StyledRightSide>
     </StyledGameContainer>
   );
@@ -59,17 +32,10 @@ const StyledFigure = styled.figure`
   width: 50%;
 `;
 
-const StyledBlankSpaces = styled.div`
-  font-size: 40px;
-  color: ${(props) => {
-    if (props.gameState === 'win') {
-      return 'green';
-    } else if (props.gameState === 'loose') {
-      return 'red';
-    } else if (props.gameState === undefined) {
-      return 'black';
-    }
-  }};
+const StyledGameContainer = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 60px;
 `;
 
 const StyledButton = styled.button`
@@ -85,12 +51,6 @@ const StyledButton = styled.button`
   width: 250px;
 `;
 
-const StyledGameContainer = styled.div`
-  width: 100%;
-  display: flex;
-  margin-top: 60px;
-`;
-
 const StyledRightSide = styled.div`
   width: 50%;
   display: flex;
@@ -102,10 +62,7 @@ const StyledRightSide = styled.div`
 
 Jogo.propTypes = {
   errors: PropTypes.number.isRequired,
-  word: PropTypes.string.isRequired,
-  gameState: PropTypes.string.isRequired,
-  setGameState: PropTypes.string.isRequired,
-  currentElementBlankSpaces: PropTypes.func.isRequired,
+  // setErrors: PropTypes.func.isRequired,
 };
 
 export default Jogo;

@@ -1,26 +1,23 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import PropTypes from 'prop-types';
+import React from "react";
+// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function Chute(props) {
-  const { buttonsDisabled, setGuessWord } = props;
-
-  const [inputValue, setInputValue] = useState('');
+function Chute() {
+  // const [inputValue, setInputValue] = useState('');
 
   return (
     <StyledGuessContainer className="guessContainer">
       <p>Já sei a palavra!</p>
       <StyledInput
         type="text"
-        value={inputValue}
-        onChange={({ target }) => setInputValue(target.value)}
+        // value={inputValue}
+        // onChange={({ target }) => setInputValue(target.value)}
         data-test="guess-button"
       />
       <StyledButton
         type="button"
-        disabled={buttonsDisabled}
-        onClick={() => setGuessWord(inputValue)}
+        // disabled={buttonsDisabled}
+        // onClick={() => setGuessWord(inputValue)}
         data-test="guess-input"
       >
         Chutar
@@ -56,15 +53,13 @@ const StyledButton = styled.button`
   border: 1px solid #7aa7c7;
   border-radius: 7px;
   color: #7aa7c7;
-
   &:disabled {
     opacity: 0.5;
   }
 `;
 
-Chute.propTypes = {
-  buttonsDisabled: PropTypes.bool.isRequired,
-  setGuessWord: PropTypes.func.isRequired,
-};
+// Chute.propTypes = {
+
+// };
 
 export default Chute;

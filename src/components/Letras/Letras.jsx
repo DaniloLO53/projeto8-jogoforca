@@ -1,29 +1,27 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import 'styled-components';
 import styled from "styled-components";
-//
+import PropTypes from 'prop-types';
 
 function Letras(props) {
-  const { alfabeto, buttonsDisabled, setCurrentLetter } = props;
+  const { alfabeto } = props;
 
-  const letter = alfabeto.map((l) => (
+  const letter = alfabeto.map((letterElement) => (
     <StyledLetters
       type="button"
-      key={l}
-      disabled={buttonsDisabled}
+      key={letterElement}
+      disabled
       onClick={({ target }) => {
-        setCurrentLetter(l);
+        // setCurrentLetter(l);
         target.disabled = true;
       }}
       data-test="letter"
     >
-      {l.toUpperCase()}
+      {letterElement.toUpperCase()}
     </StyledLetters>
   ));
 
   return (
-    <StyledLettersContainer className="lettersContainer">
+    <StyledLettersContainer>
       {letter}
     </StyledLettersContainer>
   );
@@ -31,8 +29,8 @@ function Letras(props) {
 
 Letras.propTypes = {
   alfabeto: PropTypes.array.isRequired,
-  buttonsDisabled: PropTypes.bool.isRequired,
-  setCurrentLetter: PropTypes.func.isRequired,
+  // buttonsDisabled: PropTypes.bool.isRequired,
+  // setCurrentLetter: PropTypes.func.isRequired,
 };
 
 const StyledLettersContainer = styled.div`
@@ -48,7 +46,6 @@ const StyledLetters = styled.button.attrs()`
   background-color: #e1ecf4;
   color: #7aa7c7;
   font-weight: 700;
-
   &:disabled {
     opacity: 0.5;
   }
