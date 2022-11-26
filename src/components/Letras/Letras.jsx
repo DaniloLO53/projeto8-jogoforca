@@ -1,28 +1,36 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import PropTypes from 'prop-types';
-import 'styled-components';
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 function Letras(props) {
-  const { alfabeto, buttonsDisabled, setCurrentLetter } = props;
+  const { alfabeto, errors, setErrors, word, setWord, disabled, setDisabled } = props;
 
-  const letter = alfabeto.map((l) => (
+  console.log(word.word, word.withBlanks(), word.word === word.withBlanks());
+
+  const letter = alfabeto.map((letterElement) => (
     <StyledLetters
       type="button"
-      key={l}
-      disabled={buttonsDisabled}
+      key={letterElement}
+      disabled={disabled || word.word === word.withBlanks()}
       onClick={({ target }) => {
-        setCurrentLetter(l);
+        setErrors((prevState) => word.word.includes(letterElement.toLowerCase()) ? prevState : prevState + 1);
+        setWord((prevState) => ({
+          ...prevState,
+          withBlanks: function () {
+            return prevState.withBlanks().split('').map((char, index) => prevState.word[index] === letterElement ? letterElement : char).join('');
+          },
+        }))
         target.disabled = true;
       }}
       data-test="letter"
     >
-      {l.toUpperCase()}
+      {letterElement.toUpperCase()}
     </StyledLetters>
   ));
 
   return (
-    <StyledLettersContainer className="lettersContainer">
+    <StyledLettersContainer>
       {letter}
     </StyledLettersContainer>
   );
@@ -30,8 +38,12 @@ function Letras(props) {
 
 Letras.propTypes = {
   alfabeto: PropTypes.array.isRequired,
-  buttonsDisabled: PropTypes.bool.isRequired,
-  setCurrentLetter: PropTypes.func.isRequired,
+  errors: PropTypes.number.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  word: PropTypes.string.isRequired,
+  setWord: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  setDisabled: PropTypes.func.isRequired,
 };
 
 const StyledLettersContainer = styled.div`
@@ -47,7 +59,6 @@ const StyledLetters = styled.button.attrs()`
   background-color: #e1ecf4;
   color: #7aa7c7;
   font-weight: 700;
-
   &:disabled {
     opacity: 0.5;
   }

@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 function Chute(props) {
-  const { buttonsDisabled, setGuessWord } = props;
-
   const [inputValue, setInputValue] = useState('');
+  const { word, setWord, errors, setErrors, setDisabled, disabled } = props;
 
   return (
     <StyledGuessContainer className="guessContainer">
@@ -19,9 +18,20 @@ function Chute(props) {
       />
       <StyledButton
         type="button"
-        disabled={buttonsDisabled}
-        onClick={() => setGuessWord(inputValue)}
+        disabled={disabled}
+        onClick={() => {
+          console.log(inputValue, word)
+          setErrors((prevState) => inputValue === word.word ? prevState : 6);
+          setDisabled(true);
+          setWord((prevState) => ({
+            ...prevState,
+            withBlanks: function () {
+              return word.word
+            },
+          }))
+        }}
         data-test="guess-input"
+
       >
         Chutar
       </StyledButton>
@@ -56,15 +66,18 @@ const StyledButton = styled.button`
   border: 1px solid #7aa7c7;
   border-radius: 7px;
   color: #7aa7c7;
-
   &:disabled {
     opacity: 0.5;
   }
 `;
 
 Chute.propTypes = {
-  buttonsDisabled: PropTypes.bool.isRequired,
-  setGuessWord: PropTypes.func.isRequired,
+  word: PropTypes.string.isRequired,
+  setWord: PropTypes.func.isRequired,
+  errors: PropTypes.number.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  setDisabled: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default Chute;
