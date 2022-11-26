@@ -27,6 +27,7 @@ function Jogo(props) {
         <StyledImg
           src={`./assets/forca${errors}.png`}
           alt="#"
+          data-test="game-image"
         />
       </StyledFigure>
       <StyledRightSide>
@@ -49,6 +50,8 @@ function Jogo(props) {
           display={clicked}
           errors={errors}
           word={word}
+          data-test="word"
+          data-answer={word.word}
         >
           {errors === 6 || word.withBlanks() === word.word ? word.word : word.withBlanks()}
         </StyledWord>
