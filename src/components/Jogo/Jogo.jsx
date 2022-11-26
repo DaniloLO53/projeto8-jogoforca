@@ -32,6 +32,7 @@ function Jogo(props) {
       </StyledFigure>
       <StyledRightSide>
         <StyledButton
+          data-test="choose-word"
           onClick={(() => {
             setClicked(true);
             setDisabled(false);
