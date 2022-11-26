@@ -15,10 +15,12 @@ function Chute(props) {
         value={inputValue}
         onChange={({ target }) => setInputValue(target.value)}
         data-test="guess-button"
+        disabled={disabled || word.word === word.withBlanks()}
+
       />
       <StyledButton
         type="button"
-        disabled={disabled}
+        disabled={disabled || word.word === word.withBlanks()}
         onClick={() => {
           console.log(inputValue, word)
           setErrors((prevState) => inputValue === word.word ? prevState : 6);
