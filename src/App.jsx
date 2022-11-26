@@ -1,23 +1,52 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import Jogo from "./components/Jogo/Jogo";
 import Chute from "./components/Chute/Chute";
 import Letras from "./components/Letras/Letras";
 import styled from 'styled-components';
 import alfabeto from './alfabeto';
+import palavras from './palavras';
 
 function App() {
+  const [disabled, setDisabled] = useState(true);
   const [errors, setErrors] = useState(0);
+  const [word, setWord] = useState({
+    word: palavras[Math.floor(Math.random() * palavras.length)],
+    withBlanks: function () {
+      return this.word.split('').map(() => '_').join('');
+    },
+  });
+
+  console.log(word.withBlanks());
 
   return (
     <StyledContainer>
       <Jogo
         errors={errors}
         setErrors={setErrors}
+        setWord={setWord}
+        word={word}
+        disabled={disabled}
+        setDisabled={setDisabled}
+      // showWord={showWord}
+      // setShowWord={setShowWord}
       />
       <Letras
         alfabeto={alfabeto}
+        setErrors={setErrors}
+        errors={errors}
+        word={word}
+        setWord={setWord}
+        disabled={disabled}
       />
-      <Chute />
+      <Chute
+        errors={errors}
+        setErrors={setErrors}
+        word={word}
+        setWord={setWord}
+        setDisabled={setDisabled}
+        disabled={disabled}
+      />
     </StyledContainer>
   )
 }

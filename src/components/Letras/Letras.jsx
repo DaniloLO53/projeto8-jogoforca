@@ -1,17 +1,26 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 
 function Letras(props) {
-  const { alfabeto } = props;
+  const { alfabeto, errors, setErrors, word, setWord, disabled, setDisabled } = props;
+
+  console.log(word.word, word.withBlanks(), word.word === word.withBlanks());
 
   const letter = alfabeto.map((letterElement) => (
     <StyledLetters
       type="button"
       key={letterElement}
-      disabled
+      disabled={disabled || word.word === word.withBlanks()}
       onClick={({ target }) => {
-        // setCurrentLetter(l);
+        setErrors((prevState) => word.word.includes(letterElement.toLowerCase()) ? prevState : prevState + 1);
+        setWord((prevState) => ({
+          ...prevState,
+          withBlanks: function () {
+            return prevState.withBlanks().split('').map((char, index) => prevState.word[index] === letterElement ? letterElement : char).join('');
+          },
+        }))
         target.disabled = true;
       }}
       data-test="letter"
@@ -29,8 +38,12 @@ function Letras(props) {
 
 Letras.propTypes = {
   alfabeto: PropTypes.array.isRequired,
-  // buttonsDisabled: PropTypes.bool.isRequired,
-  // setCurrentLetter: PropTypes.func.isRequired,
+  errors: PropTypes.number.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  word: PropTypes.string.isRequired,
+  setWord: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  setDisabled: PropTypes.func.isRequired,
 };
 
 const StyledLettersContainer = styled.div`
