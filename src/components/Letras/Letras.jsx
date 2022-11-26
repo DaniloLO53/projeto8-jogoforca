@@ -61,6 +61,7 @@ const StyledLetters = styled.button.attrs()`
   font-weight: 700;
   &:disabled {
     opacity: 0.5;
+    color: #7aa7c8
   }
 `;
 
