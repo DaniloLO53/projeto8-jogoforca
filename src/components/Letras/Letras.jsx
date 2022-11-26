@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import 'styled-components';
 import styled from "styled-components";
+//
 
 function Letras(props) {
   const { alfabeto, buttonsDisabled, setCurrentLetter } = props;
