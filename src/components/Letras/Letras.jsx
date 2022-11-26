@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import './Letras.css';
+import 'styled-components';
+import styled from "styled-components";
 
 function Letras(props) {
   const { alfabeto, buttonsDisabled, setCurrentLetter } = props;
 
   const letter = alfabeto.map((l) => (
-    <button
+    <StyledLetters
       type="button"
       key={l}
       disabled={buttonsDisabled}
@@ -14,15 +15,16 @@ function Letras(props) {
         setCurrentLetter(l);
         target.disabled = true;
       }}
+      data-test="letter"
     >
       {l.toUpperCase()}
-    </button>
+    </StyledLetters>
   ));
 
   return (
-    <div className="lettersContainer">
+    <StyledLettersContainer className="lettersContainer">
       {letter}
-    </div>
+    </StyledLettersContainer>
   );
 }
 
@@ -31,5 +33,24 @@ Letras.propTypes = {
   buttonsDisabled: PropTypes.bool.isRequired,
   setCurrentLetter: PropTypes.func.isRequired,
 };
+
+const StyledLettersContainer = styled.div`
+  width: 56%;
+  margin-top: 100px;
+  
+`;
+
+const StyledLetters = styled.button.attrs()`
+  width: 40px;
+  height: 40px;
+  margin: 6px;
+  background-color: #e1ecf4;
+  color: #7aa7c7;
+  font-weight: 700;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;
 
 export default Letras;

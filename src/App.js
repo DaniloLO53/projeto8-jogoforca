@@ -5,7 +5,7 @@ import Jogo from "./components/Jogo/Jogo";
 import Letras from "./components/Letras/Letras";
 import palavras from "./palavras";
 import alfabeto from "./alfabeto";
-import './App.css'
+import styled from "styled-components";
 
 function App() {
   const [buttonsDisabled, setButtonsDisabled] = useState(true);
@@ -123,7 +123,7 @@ function App() {
   };
 
   const renderBlankOnScreen = () => currentBlankSpaces
-    .map((char, index) => <span key={index + char}>{char}</span>);
+    .map((char, index) => <StyledSpan key={index + char}>{char}</StyledSpan>);
 
   const verifyContainsLetter = () => word.includes(currentLetter);
 
@@ -135,13 +135,16 @@ function App() {
     }
   };
 
+  console.log(gameState)
+
   return (
-    <div className="mainContainer">
+    <StyledContainer className="mainContainer">
       <Jogo
         errors={errors}
         gameState={gameState}
         setGameState={setGameState}
         currentElementBlankSpaces={currentElementBlankSpaces}
+        word={word}
       />
       <Letras
         alfabeto={alfabeto}
@@ -152,8 +155,20 @@ function App() {
         buttonsDisabled={buttonsDisabled}
         setGuessWord={setGuessWord}
       />
-    </div>
+    </StyledContainer>
   );
 }
+
+const StyledSpan = styled.span`
+  margin: 10px;
+`;
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+
+`;
 
 export default App;
