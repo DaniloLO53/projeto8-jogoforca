@@ -11,9 +11,10 @@ function Jogo(props) {
     word,
     setDisabled,
     setErrors,
+    disabled,
   } = props;
 
-  const [clicked, setClicked] = useState(false);
+  console.log(errors, word.word, !disabled)
 
   return (
     <StyledGameContainer>
@@ -28,7 +29,6 @@ function Jogo(props) {
         <StyledButton
           data-test="choose-word"
           onClick={(() => {
-            setClicked(true);
             setDisabled(false);
             setErrors(0);
             setWord({
@@ -42,11 +42,11 @@ function Jogo(props) {
           Escolher Palavra
         </StyledButton>
         <StyledWord
-          clicked={clicked}
           errors={errors}
           word={word}
           data-test="word"
           data-answer={word.word}
+          clicked={errors === 6 || word.withBlanks() === word.word || !disabled}
         >
           {
             errors === 6 || word.withBlanks() === word.word
@@ -117,6 +117,7 @@ Jogo.propTypes = {
   word: PropTypes.object.isRequired,
   setDisabled: PropTypes.func.isRequired,
   setErrors: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default Jogo;
