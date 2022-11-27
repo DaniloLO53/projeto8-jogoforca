@@ -25,6 +25,7 @@ function App() {
         setWord={setWord}
         word={word}
         setDisabled={setDisabled}
+        disabled={disabled}
       />
       <Letras
         alfabeto={alfabeto}

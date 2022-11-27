@@ -1,17 +1,20 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 
 function Letras(props) {
   const { alfabeto, setErrors, word, setWord, disabled } = props;
 
+  console.log(disabled, word.word === word.withBlanks())
+
   const letterElement = alfabeto.map((letter) => (
     <StyledLetters
       type="button"
       key={letter}
-      disabled={disabled || word.word === word.withBlanks()}
+      disabled={(disabled) || word.word === word.withBlanks()}
       onClick={({ target }) => {
+        target.disabled = true;
         setErrors((prevState) => word.word
           .includes(letter.toLowerCase()) ? prevState : prevState + 1);
         setWord((prevState) => ({
@@ -23,13 +26,14 @@ function Letras(props) {
               .join('');
           },
         }))
-        target.disabled = true;
       }}
       data-test="letter"
     >
       {letter.toUpperCase()}
     </StyledLetters>
   ));
+
+  letterElement.map((x) => console.log(x.props.disabled))
 
   return (
     <StyledLettersContainer>
