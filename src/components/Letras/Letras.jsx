@@ -56,12 +56,12 @@ const StyledLetters = styled.button.attrs()`
   width: 40px;
   height: 40px;
   margin: 6px;
-  background-color: #e1ecf4;
-  color: #7aa7c7;
+  background-color: #7aa7c7;
+  color: #39739d;
   font-weight: 700;
   &:disabled {
-    opacity: 0.3;
-    color: #7aa7c8
+    color: #7aa7c7;
+    background-color: #9FAAB5;
   }
 `;
 
