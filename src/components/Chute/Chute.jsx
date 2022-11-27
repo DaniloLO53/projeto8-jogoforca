@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 function Chute(props) {
   const [inputValue, setInputValue] = useState('');
-  const { word, setWord, errors, setErrors, setDisabled, disabled } = props;
+  const { word, setWord, setErrors, setDisabled, disabled } = props;
 
   return (
     <StyledGuessContainer className="guessContainer">
@@ -22,15 +22,14 @@ function Chute(props) {
         type="button"
         disabled={disabled || word.word === word.withBlanks()}
         onClick={() => {
-          console.log(inputValue, word)
           setErrors((prevState) => inputValue === word.word ? prevState : 6);
           setDisabled(true);
           setWord((prevState) => ({
             ...prevState,
             withBlanks: function () {
-              return word.word
-            },
-          }))
+              return word.word;
+            }
+          }));
         }}
         data-test="guess-input"
 
@@ -74,9 +73,8 @@ const StyledButton = styled.button`
 `;
 
 Chute.propTypes = {
-  word: PropTypes.string.isRequired,
+  word: PropTypes.object.isRequired,
   setWord: PropTypes.func.isRequired,
-  errors: PropTypes.number.isRequired,
   setErrors: PropTypes.func.isRequired,
   setDisabled: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,

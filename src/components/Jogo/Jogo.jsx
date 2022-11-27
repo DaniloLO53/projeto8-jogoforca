@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
@@ -10,14 +9,9 @@ function Jogo(props) {
     errors,
     setWord,
     word,
-    setShowWord,
-    showWord,
-    disabled,
     setDisabled,
     setErrors,
   } = props;
-
-  console.log(word.word, word.withBlanks(), errors)
 
   const [clicked, setClicked] = useState(false);
 
@@ -26,7 +20,7 @@ function Jogo(props) {
       <StyledFigure>
         <StyledImg
           src={`./assets/forca${errors}.png`}
-          alt="#"
+          alt="forca"
           data-test="game-image"
         />
       </StyledFigure>
@@ -48,13 +42,17 @@ function Jogo(props) {
           Escolher Palavra
         </StyledButton>
         <StyledWord
-          display={clicked}
+          clicked={clicked}
           errors={errors}
           word={word}
           data-test="word"
           data-answer={word.word}
         >
-          {errors === 6 || word.withBlanks() === word.word ? word.word : word.withBlanks()}
+          {
+            errors === 6 || word.withBlanks() === word.word
+              ? word.word
+              : word.withBlanks()
+          }
         </StyledWord>
       </StyledRightSide>
     </StyledGameContainer>
@@ -101,7 +99,7 @@ const StyledWord = styled.p`
   letter-spacing: 1.5rem;
   font-size: 40px;
   font-weight: 700;
-  display: ${({ display }) => display ? 'block' : 'none'};
+  display: ${({ clicked }) => clicked ? 'block' : 'none'};
   color: ${({ errors, word }) => {
     if (errors === 6) {
       return 'red';
@@ -116,10 +114,7 @@ const StyledWord = styled.p`
 Jogo.propTypes = {
   errors: PropTypes.number.isRequired,
   setWord: PropTypes.func.isRequired,
-  word: PropTypes.string.isRequired,
-  showWord: PropTypes.string.isRequired,
-  setShowWord: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  word: PropTypes.object.isRequired,
   setDisabled: PropTypes.func.isRequired,
   setErrors: PropTypes.func.isRequired,
 };
