@@ -17,8 +17,6 @@ function App() {
     },
   });
 
-  console.log(word.withBlanks());
-
   return (
     <StyledContainer>
       <Jogo
@@ -26,21 +24,16 @@ function App() {
         setErrors={setErrors}
         setWord={setWord}
         word={word}
-        disabled={disabled}
         setDisabled={setDisabled}
-      // showWord={showWord}
-      // setShowWord={setShowWord}
       />
       <Letras
         alfabeto={alfabeto}
         setErrors={setErrors}
-        errors={errors}
-        word={word}
         setWord={setWord}
+        word={word}
         disabled={disabled}
       />
       <Chute
-        errors={errors}
         setErrors={setErrors}
         word={word}
         setWord={setWord}
@@ -48,7 +41,7 @@ function App() {
         disabled={disabled}
       />
     </StyledContainer>
-  )
+  );
 }
 
 const StyledContainer = styled.div`

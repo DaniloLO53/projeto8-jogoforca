@@ -4,46 +4,46 @@ import styled from "styled-components";
 import PropTypes from 'prop-types';
 
 function Letras(props) {
-  const { alfabeto, errors, setErrors, word, setWord, disabled, setDisabled } = props;
+  const { alfabeto, setErrors, word, setWord, disabled } = props;
 
-  console.log(word.word, word.withBlanks(), word.word === word.withBlanks());
-
-  const letter = alfabeto.map((letterElement) => (
+  const letterElement = alfabeto.map((letter) => (
     <StyledLetters
       type="button"
-      key={letterElement}
+      key={letter}
       disabled={disabled || word.word === word.withBlanks()}
       onClick={({ target }) => {
-        setErrors((prevState) => word.word.includes(letterElement.toLowerCase()) ? prevState : prevState + 1);
+        setErrors((prevState) => word.word
+          .includes(letter.toLowerCase()) ? prevState : prevState + 1);
         setWord((prevState) => ({
           ...prevState,
           withBlanks: function () {
-            return prevState.withBlanks().split('').map((char, index) => prevState.word[index] === letterElement ? letterElement : char).join('');
+            return prevState.withBlanks()
+              .split('')
+              .map((char, index) => prevState.word[index] === letter ? letter : char)
+              .join('');
           },
         }))
         target.disabled = true;
       }}
       data-test="letter"
     >
-      {letterElement.toUpperCase()}
+      {letter.toUpperCase()}
     </StyledLetters>
   ));
 
   return (
     <StyledLettersContainer>
-      {letter}
+      {letterElement}
     </StyledLettersContainer>
   );
 }
 
 Letras.propTypes = {
   alfabeto: PropTypes.array.isRequired,
-  errors: PropTypes.number.isRequired,
   setErrors: PropTypes.func.isRequired,
-  word: PropTypes.string.isRequired,
+  word: PropTypes.object.isRequired,
   setWord: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
-  setDisabled: PropTypes.func.isRequired,
 };
 
 const StyledLettersContainer = styled.div`
@@ -60,7 +60,7 @@ const StyledLetters = styled.button.attrs()`
   color: #7aa7c7;
   font-weight: 700;
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.3;
     color: #7aa7c8
   }
 `;
