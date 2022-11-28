@@ -12,6 +12,8 @@ function Jogo(props) {
     setDisabled,
     setErrors,
     disabled,
+    choosedLetters,
+    setChoosedLetters,
   } = props;
 
   console.log(errors, word.word, !disabled)
@@ -29,6 +31,7 @@ function Jogo(props) {
         <StyledButton
           data-test="choose-word"
           onClick={(() => {
+            setChoosedLetters([]);
             setDisabled(false);
             setErrors(0);
             setWord({
@@ -118,6 +121,8 @@ Jogo.propTypes = {
   setDisabled: PropTypes.func.isRequired,
   setErrors: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
+  choosedLetters: PropTypes.array.isRequired,
+  setChoosedLetters: PropTypes.func.isRequired,
 };
 
 export default Jogo;

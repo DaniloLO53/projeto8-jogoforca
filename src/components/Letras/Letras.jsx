@@ -4,17 +4,15 @@ import styled from "styled-components";
 import PropTypes from 'prop-types';
 
 function Letras(props) {
-  const { alfabeto, setErrors, word, setWord, disabled } = props;
-
-  console.log(disabled, word.word === word.withBlanks())
+  const { alfabeto, setErrors, word, setWord, disabled, setChoosedLetters, choosedLetters } = props;
 
   const letterElement = alfabeto.map((letter) => (
     <StyledLetters
       type="button"
       key={letter}
-      disabled={(disabled) || word.word === word.withBlanks()}
+      disabled={(disabled) || word.word === word.withBlanks() || choosedLetters.includes(letter.toLowerCase())}
       onClick={({ target }) => {
-        target.disabled = true;
+        setChoosedLetters((prevState) => [...prevState, letter.toLowerCase()]);
         setErrors((prevState) => word.word
           .includes(letter.toLowerCase()) ? prevState : prevState + 1);
         setWord((prevState) => ({
@@ -47,6 +45,8 @@ Letras.propTypes = {
   setErrors: PropTypes.func.isRequired,
   word: PropTypes.object.isRequired,
   setWord: PropTypes.func.isRequired,
+  choosedLetters: PropTypes.array.isRequired,
+  setChoosedLetters: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
 };
 
