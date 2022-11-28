@@ -10,6 +10,7 @@ import palavras from './palavras';
 function App() {
   const [disabled, setDisabled] = useState(true);
   const [errors, setErrors] = useState(0);
+  const [choosedLetters, setChoosedLetters] = useState([]);
   const [word, setWord] = useState({
     word: palavras[Math.floor(Math.random() * palavras.length)],
     withBlanks: function () {
@@ -26,6 +27,8 @@ function App() {
         word={word}
         setDisabled={setDisabled}
         disabled={disabled}
+        setChoosedLetters={setChoosedLetters}
+        choosedLetters={choosedLetters}
       />
       <Letras
         alfabeto={alfabeto}
@@ -33,6 +36,8 @@ function App() {
         setWord={setWord}
         word={word}
         disabled={disabled}
+        setChoosedLetters={setChoosedLetters}
+        choosedLetters={choosedLetters}
       />
       <Chute
         setErrors={setErrors}
